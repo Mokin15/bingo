@@ -1,98 +1,130 @@
- let binsza = [
-  'kłutnia z Gibkiem',
-  'rozmowa przez telefon',
-  'to nie działa',
-  'nieobecni check',
-  'ocen brakuje',
-  'oceniam negatywnie',
-  'szwendacz',
-  'om niom niom',
-  'wyrzućcie to...',
-  'radio',
-  'zaczepka',
-  'nie było jeszcze dzwonka',
-  'tego nie bedzie na egzaminie',
-  'przygaście monitory',
-  'yyy...',
-  'dyżurny',
-  'a co ty robisz?',
-  'sonar',
-  'wy też nie macie internetu ?'
-] 
- 
-let  cala_tablica = []
-
-
-function table(){
-  
-  let tablica = document.querySelectorAll('.batonik'), losowy
-  console.log(tablica)
-
-  tablica.forEach(element => {
-    losowy = Math.random()*binsza.length
-    console.log(losowy)
-    console.log(binsza)
-
-    element.innerHTML = binsza.splice(losowy, 1)
-  });
-  console.log(cala_tablica)
-  dodajEventListeners();
-
-}
-
-
-function tab_create(x){
-  let j = 0;
-  document.querySelector('main').innerHTML = '<table id="pole_tab"></table>'
-  let tab_szkielet = document.querySelector('table')
-  for(let i = 0; i<x;i++){
-    tab_szkielet.innerHTML += '<tr id="trow'+i+'"></tr>' 
-  }
-
-
-  let tablica = document.querySelectorAll('tr')
-  tablica.forEach(element => {
-    for(let i = 0; i<x;i++){
-      element.innerHTML += '<td>'+'<button '+'id="t'+j+'_'+i+'" class="batonik"></button></td>'
-      cala_tablica.push('tdes'+j+'_'+i)
-    }
-    j++
-  });
+let zagadnienia = [ ] 
+   for(let i = 0; i<30; i++){
+    zagadnienia.push(i+1)
+   }
+  let  cala_tablica = new Array()
   
   
-  this.globalna = 'test globalnej'
-  table()
-}
-
-
-function dodajEventListeners() {
-  const tabela = document.querySelector('table'); // selektor tabeli
-  const komórki = tabela.querySelectorAll('.batonik'); // selektor komórek tabeli
-  komórki.forEach(komórka => {
-    komórka.addEventListener('click', () => {
-      komórka.classList.toggle('bingus')
+  function table(x){
+    
+    let tablica = document.querySelectorAll('.batonik'), losowy
+    console.log(tablica)
+  
+    tablica.forEach(element => {
+      losowy = Math.random()*zagadnienia.length
+      console.log(losowy)
+      console.log(zagadnienia)
+  
+      element.innerHTML = zagadnienia.splice(losowy, 1)
     });
-  });
-}
+    console.log(cala_tablica)
+    dodajEventListeners(x);
+  
+  }
+  
+  
+  function tab_create(x){
+    let j = 0;
+    document.querySelector('main').innerHTML = '<table id="pole_tab"></table>'
+    let tab_szkielet = document.querySelector('table')
+    for(let i = 0; i<x;i++){
+      tab_szkielet.innerHTML += '<tr id="trow'+i+'"></tr>' 
+    }
+  
+  
+    let tablica = document.querySelectorAll('tr')
+    tablica.forEach(element => {
+      for(let i = 0; i<x;i++){
+        element.innerHTML += '<td>'+'<button '+'id="'+j+','+i+'" class="batonik"></button></td>'
+        
+        cala_tablica[j+','+i] = false
+      }
+      j++
+    });
+    
+    table(x)
+  }
+  
+  
+  function dodajEventListeners(x) {
+    const tabela = document.querySelector('table'); // selektor tabeli
+    const komórki = tabela.querySelectorAll('.batonik'); // selektor komórek tabeli
+    let ilosc_true = 0
+    komórki.forEach(komórka => {
+      komórka.addEventListener('click', () => {
+        komórka.classList.toggle('bingus')
+        if(!(cala_tablica[komórka.id])){
+          cala_tablica[komórka.id] = true  
+          console.log(`checing ${komórka.id}, is ${cala_tablica[komórka.id]}`)
+          ilosc_true++
+          console.log(ilosc_true)
+        }
+        else{
+          cala_tablica[komórka.id] = false  
+            console.log(`checing ${komórka.id}, is ${cala_tablica[komórka.id]}`)
+            ilosc_true--
+            console.log(ilosc_true)
+        }
+          console.log(cala_tablica)
+        chceck_bingo(x)
 
+        });
+      });
+      
+    
+    
+    };
 
+  function chceck_bingo(x) {
+    console.log('check_bingo');
 
+      for (let i = 0; i < x; i++) {
+      let rowBingo = true;
+      for (let j = 0; j < x; j++) {
+        if (!cala_tablica[i + ',' + j]) {
+          rowBingo = false;
+          break;
+        }
+      }
+      if (rowBingo) {
+        console.log('bingo');
+        alert('Bingo');
+        return;
+      }
+    }
+  
 
-function toglle(){
-  console.log(window.globalna)
-}
+    for (let j = 0; j < x; j++) {
+      let colBingo = true;
+      for (let i = 0; i < x; i++) {
+        if (!cala_tablica[i + ',' + j]) {
+          colBingo = false;
+          break;
+        }
+      }
+      if (colBingo) {
+        console.log('bingo');
+        alert('Bingo');
+        return;
+      }
+    }
+  }
+  
 
+  
+  
+  
+  
 
-
-
-const but_p = document.querySelector('#p_p')
-const but_cz = document.querySelector('#cz_cz')
-const but_t = document.querySelector('#t_t')
-
-
-
-
-but_p.addEventListener('click', function(){tab_create(5)} )
-but_cz.addEventListener('click', function(){tab_create(4)})
-but_t.addEventListener('click', function(){tab_create(3)})
+  //const but_dz = document.querySelector('#dz_dz')
+  const but_p = document.querySelector('#p_p')
+  const but_cz = document.querySelector('#cz_cz')
+  const but_t = document.querySelector('#t_t')
+  
+  
+  
+  //but_dz.addEventListener('click', function(){tab_create(10)} )
+  but_p.addEventListener('click', function(){tab_create(5)} )
+  but_cz.addEventListener('click', function(){tab_create(4)})
+  but_t.addEventListener('click', function(){tab_create(3)})
 
