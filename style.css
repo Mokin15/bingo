@@ -45,6 +45,8 @@
     border: none;
     border-radius: 2px;
     margin: 10px;
+    text-decoration: none;
+
   }
   table{
     height: 90%;
