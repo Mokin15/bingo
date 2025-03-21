@@ -5,6 +5,18 @@ let zagadnienia = [ ]
   let  cala_tablica = new Array()
   
   
+   function win_bingo(){
+    let tablica = document.querySelectorAll('.batonik')
+    tablica.forEach(element => {
+      element.innerHTML += '<br>bingo'
+      if (tablica.length == 25) {
+    element.classList.add('big_win')
+        }})
+  }
+    
+
+
+
   function table(x){
     
     let tablica = document.querySelectorAll('.batonik'), losowy
@@ -88,7 +100,7 @@ let zagadnienia = [ ]
       }
       if (rowBingo) {
         console.log('bingo');
-        alert('Bingo');
+        win_bingo(); 
         return;
       }
     }
@@ -104,11 +116,41 @@ let zagadnienia = [ ]
       }
       if (colBingo) {
         console.log('bingo');
-        alert('Bingo');
+        win_bingo();
         return;
       }
     }
+
+    let firstDiagonalBingo = true;
+    for (let i = 0; i < x; i++) {
+      if (!cala_tablica[i + ',' + i]) {
+        firstDiagonalBingo = false;
+        break;
+      }
+    }
+    if (firstDiagonalBingo) {
+      console.log('bingo');
+      win_bingo();
+      return;
+    }
+  
+    
+    let secondDiagonalBingo = true;
+    for (let i = 0; i < x; i++) {
+      if (!cala_tablica[i + ',' + (x - 1 - i)]) {
+        secondDiagonalBingo = false;
+        break;
+      }
+    }
+    if (secondDiagonalBingo) {
+      console.log('bingo');
+      win_bingo();
+      return;
+    }
   }
+
+
+
   
 
   
@@ -116,15 +158,13 @@ let zagadnienia = [ ]
   
   
 
-  //const but_dz = document.querySelector('#dz_dz')
   const but_p = document.querySelector('#p_p')
   const but_cz = document.querySelector('#cz_cz')
   const but_t = document.querySelector('#t_t')
+
   
   
   
-  //but_dz.addEventListener('click', function(){tab_create(10)} )
   but_p.addEventListener('click', function(){tab_create(5)} )
   but_cz.addEventListener('click', function(){tab_create(4)})
   but_t.addEventListener('click', function(){tab_create(3)})
-
